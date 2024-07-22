@@ -20,16 +20,13 @@ export default function Home() {
   };
 
   return (
-    <Pagina
-      pesquisaProduto={
-        <PesquisaProduto
-          produtos={produtos}
-          onProdutosFiltrados={handleProdutosFiltrados}
-        />
-      }
-    >
+    <Pagina>
+      <PesquisaProduto
+        produtos={produtos}
+        onProdutosFiltrados={handleProdutosFiltrados}
+      />
       <motion.div
-        className="flex flex-wrap gap-5 justify-center"
+        className="flex flex-wrap gap-5 justify-center mt-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
