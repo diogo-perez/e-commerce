@@ -33,8 +33,8 @@ export default function PesquisaProduto(props: PesquisaProdutoProps) {
   };
 
   return (
-    <div className="absolute -mt-8 mb-0 left-1/2 transform -translate-x-1/2 w-full flex justify-center z-20">
-      <div className="relative w-5/12 mb-8">
+    <div className="absolute w-4/5 sm:w-3/5 left-1/2 transform -translate-x-1/2 z-20 flex">
+      <div className="relative w-full">
         <input
           type="text"
           value={texto}
