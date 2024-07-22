@@ -8,11 +8,7 @@ import useCarrinho from "@/data/hooks/useCarrinho";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export interface PageCarrinhoProps {
-  pesquisaProduto?: React.ReactNode;
-}
-
-export default function PageCarrinho({ pesquisaProduto }: PageCarrinhoProps) {
+export default function PageCarrinho() {
   const { carrinho } = useCarrinho();
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
 
@@ -63,7 +59,6 @@ export default function PageCarrinho({ pesquisaProduto }: PageCarrinhoProps) {
       ) : (
         <>
           <div className="flex flex-col gap-5 pb-24">
-            {pesquisaProduto}
             {carrinho.itens.map((item) => (
               <AreaCarrinho
                 key={item.produto.id}
