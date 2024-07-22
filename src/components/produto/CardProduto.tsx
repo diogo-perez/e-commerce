@@ -2,6 +2,7 @@ import useCarrinho from "@/data/hooks/useCarrinho";
 import Produto from "@/data/model/Produto";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { IconShoppingCartPlus } from "@tabler/icons-react";
 
 export interface CardProdutoProps {
   produto: Produto;
@@ -60,8 +61,10 @@ export default function CardProduto(props: CardProdutoProps) {
             </div>
             <button
               onClick={() => carrinho.adicionar(props.produto)}
-              className="border rounded-full px-4 py-2 text-sm text-white bg-zinc-700 hover:bg-zinc-600 transition-colors"
+              className="flex items-center border rounded-full px-4 py-2 text-sm text-white bg-green-600 hover:bg-zinc-600 transition-colors"
             >
+              <IconShoppingCartPlus size={16} className="mr-2" />{" "}
+              {/* Ícone adicionado */}
               Adicionar
             </button>
           </div>
