@@ -28,7 +28,7 @@ export default function Usuario() {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <div
         className="flex items-center border border-white p-2 rounded-full text-white cursor-pointer"
         onClick={toggleMenu}
@@ -38,7 +38,7 @@ export default function Usuario() {
       {menuOpen && (
         <div
           ref={menuRef}
-          className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10"
+          className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20"
         >
           <Link
             href={user ? "/usuario/meu-perfil" : "/usuario/login"}

@@ -39,7 +39,7 @@ export default function PesquisaProduto(props: PesquisaProdutoProps) {
   };
 
   return (
-    <div className="relative w-4/5 sm:w-3/5 left-1/2 transform -translate-x-1/2 z-20 flex">
+    <div className="relative w-4/5 sm:w-3/5 left-1/2 transform -translate-x-1/2 -z-10 flex">
       <div className="relative w-full">
         <input
           type="text"
