@@ -33,8 +33,7 @@ export default function Usuario() {
         className="flex items-center border border-white p-2 rounded-full text-white cursor-pointer"
         onClick={toggleMenu}
       >
-        <IconUser size={24} stroke={2} className="mr-2" />
-        <span className="text-sm">{user ? user.email : "Entrar"}</span>
+        <IconUser size={24} stroke={1} className="mr-1" />
       </div>
       {menuOpen && (
         <div
