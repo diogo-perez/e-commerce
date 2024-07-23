@@ -5,4 +5,5 @@ export default interface Produto {
     desconto:number
     descricao: string
     imagem: string
+    categoria: string
 }

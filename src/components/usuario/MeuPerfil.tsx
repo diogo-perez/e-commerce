@@ -93,6 +93,23 @@ export default function MeuPerfil() {
             </div>
             <div>
               <label
+                htmlFor="email"
+                className="block text-sm font-medium text-white"
+              >
+                E-mail
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={usuario.email}
+                onChange={(e) =>
+                  setUsuario({ ...usuario, email: e.target.value })
+                }
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm text-black py-2 px-3"
+              />
+            </div>
+            <div>
+              <label
                 htmlFor="dataNasc"
                 className="block text-sm font-medium text-white"
               >

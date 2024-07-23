@@ -1,3 +1,4 @@
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 
 export interface PaginaProps {
@@ -11,12 +12,13 @@ export default function Pagina(props: PaginaProps) {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main
-        className={`w-full max-w-[1200px] mx-auto flex-1 ${
+        className={`w-full max-w-[1400px] mx-auto flex-1 ${
           props.className ?? ""
         } py-10 px-4 sm:px-6 lg:px-8`}
       >
         {props.children}
       </main>
+      <Footer />
     </div>
   );
 }

@@ -163,8 +163,8 @@ export function ProvedorGlobal({ children }: any) {
     remove("user");
     setUser(null);
     toast.success("Logout bem-sucedido!");
-    window.location.reload();
   };
+
   return (
     <ContextGlobal.Provider
       value={{

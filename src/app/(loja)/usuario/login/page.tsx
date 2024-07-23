@@ -1,18 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Pagina from "@/components/template/Pagina";
 import useCarrinho from "@/data/hooks/useCarrinho";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
 
 export default function Login() {
+  const router = useRouter();
   const { login } = useCarrinho();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    login(email, password);
+    if (validateEmail(email)) {
+      login(email, password);
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
+    }
+  };
+
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      setEmailError("Por favor, insira um email válido.");
+      return false;
+    } else {
+      setEmailError("");
+      return true;
+    }
   };
 
   return (
@@ -29,16 +49,28 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
+            {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label className="block mb-1">Senha</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               className="w-full p-2 border rounded text-black"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-12 transform -translate-y-1/2"
+            >
+              {showPassword ? (
+                <IconEyeOff className="text-black" size={24} />
+              ) : (
+                <IconEye className="text-black" size={24} />
+              )}
+            </button>
           </div>
           <button
             type="submit"
