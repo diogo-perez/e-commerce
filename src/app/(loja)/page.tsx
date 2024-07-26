@@ -6,7 +6,7 @@ import produtos from "@/data/constants/produtos";
 import Produto from "@/data/model/Produto";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const searchParams = useSearchParams();
