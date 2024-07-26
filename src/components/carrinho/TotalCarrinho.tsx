@@ -24,7 +24,7 @@ export default function TotalCarrinho(props: TotalCarrinhoProps) {
       </div>
       <button
         onClick={props.onFinalizar}
-        className="bg-green-600 px-4 py-2 rounded-md text-xl"
+        className="bg-green-600 px-4 py-3 rounded-md text-1xl"
       >
         Fechar pedido
       </button>

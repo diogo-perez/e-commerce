@@ -47,33 +47,36 @@ export default function PageCarrinho() {
 
   return (
     <Pagina className="flex flex-col gap-10 pb-24">
-      <CheckoutModal
-        isOpen={isCheckoutModalOpen}
-        onClose={() => setIsCheckoutModalOpen(false)}
-        onSave={handleSave}
-        totalCarrinho={totalCarrinho}
-      />
-
-      {carrinho.itens.length === 0 ? (
-        <CarrinhoVazio />
+      {isCheckoutModalOpen ? (
+        <CheckoutModal
+          onClose={() => setIsCheckoutModalOpen(false)}
+          onSave={handleSave}
+          totalCarrinho={totalCarrinho}
+        />
       ) : (
         <>
-          <div className="flex flex-col gap-5 pb-24">
-            {carrinho.itens.map((item) => (
-              <AreaCarrinho
-                key={item.produto.id}
-                item={item}
-                adicionar={(item) => carrinho.adicionar(item.produto)}
-                remover={(item) => carrinho.remover(item.produto)}
-              />
-            ))}
-          </div>
-          <div className="fixed bottom-0 left-0 right-0 bg-zinc-900 ">
-            <TotalCarrinho
-              itens={carrinho.itens}
-              onFinalizar={handleFinalizar}
-            />
-          </div>
+          {carrinho.itens.length === 0 ? (
+            <CarrinhoVazio />
+          ) : (
+            <>
+              <div className="flex flex-col gap-5 pb-24">
+                {carrinho.itens.map((item) => (
+                  <AreaCarrinho
+                    key={item.produto.id}
+                    item={item}
+                    adicionar={(item) => carrinho.adicionar(item.produto)}
+                    remover={(item) => carrinho.remover(item.produto)}
+                  />
+                ))}
+              </div>
+              <div className="fixed bottom-0 left-0 right-0 bg-zinc-900 ">
+                <TotalCarrinho
+                  itens={carrinho.itens}
+                  onFinalizar={handleFinalizar}
+                />
+              </div>
+            </>
+          )}
         </>
       )}
     </Pagina>
