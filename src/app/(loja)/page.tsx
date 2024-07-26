@@ -4,7 +4,7 @@ import PesquisaProduto from "@/components/produto/PesquisaProduto";
 import Pagina from "@/components/template/Pagina";
 import produtos from "@/data/constants/produtos";
 import Produto from "@/data/model/Produto";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 
@@ -21,12 +21,13 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (categoria && categoria !== "Todos") {
-      setProdutosFiltrados(
-        produtos.filter((produto) => produto.categoria === categoria)
-      );
-    } else {
+    if (categoria === "Todos") {
       setProdutosFiltrados(produtos);
+    } else {
+      const produtosFiltrados = produtos.filter(
+        (produto) => produto.categoria === categoria
+      );
+      setProdutosFiltrados(produtosFiltrados);
     }
   }, [categoria]);
 
