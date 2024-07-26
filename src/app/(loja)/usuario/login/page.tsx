@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Pagina from "@/components/template/Pagina";
 import useCarrinho from "@/data/hooks/useCarrinho";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -38,10 +39,10 @@ export default function Login() {
   return (
     <Pagina className="flex justify-center">
       <div className=" p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Logar</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Entrar</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block mb-1">Email</label>
+            <label className="block mb-1">E-mail:</label>
             <input
               type="email"
               className="w-full p-2 border rounded text-black"
@@ -52,7 +53,7 @@ export default function Login() {
             {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
           </div>
           <div className="mb-4 relative">
-            <label className="block mb-1">Senha</label>
+            <label className="block mb-1">Senha:</label>
             <input
               type={showPassword ? "text" : "password"}
               className="w-full p-2 border rounded text-black"
@@ -79,6 +80,17 @@ export default function Login() {
             Entrar
           </button>
         </form>
+        <div className="mt-4 text-center">
+          <p className="text-sm">
+            Não tem uma conta?{" "}
+            <Link
+              href="/usuario/cadastro"
+              className="text-blue-600 hover:underline"
+            >
+              Cadastrar-se
+            </Link>
+          </p>
+        </div>
       </div>
     </Pagina>
   );

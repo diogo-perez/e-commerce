@@ -68,7 +68,7 @@ export default function Usuario() {
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center transition-colors"
             >
               <IconLogout size={20} stroke={1.5} className="mr-2" />
-              Logar
+              Entrar
             </Link>
           )}
         </div>

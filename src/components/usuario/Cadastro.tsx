@@ -1,60 +1,58 @@
-import Usuario from "@/data/model/Usuario";
-import React, { useState } from "react";
-import { IconPencil, IconEye, IconEyeOff } from "@tabler/icons-react";
-import user from "@/data/constants/usuario";
+"use client";
 
-const fotoPadrao = "https://via.placeholder.com/150";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Pagina from "@/components/template/Pagina";
+import useCarrinho from "@/data/hooks/useCarrinho";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import Link from "next/link";
 
-export default function MeuPerfil() {
-  const [usuario, setUsuario] = useState<Usuario>({
-    ...user,
-    imagem: fotoPadrao,
-  });
-
+export default function Cadastro() {
+  const router = useRouter();
+  const { login } = useCarrinho();
+  const [nome, setNome] = useState("");
+  const [sobrenome, setSobrenome] = useState("");
+  const [dataNasc, setDataNasc] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [senhaVisivel, setSenhaVisivel] = useState(false);
-  const [fotoInputKey, setFotoInputKey] = useState(Date.now()); // Key para reinicializar o input de arquivo
+  const [emailError, setEmailError] = useState("");
 
-  const toggleSenhaVisivel = () => setSenhaVisivel(!senhaVisivel);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setUsuario({ ...usuario, imagem: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (validateEmail(email)) {
+      login(email, password);
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
     }
   };
 
-  return (
-    <div className="p-4 sm:p-10">
-      <div className="flex flex-col items-center gap-4">
-        <label htmlFor="nome" className="block text-sm font-medium text-white">
-          Foto de Perfil
-        </label>
-        <div className="relative w-32 h-32 rounded-full overflow-hidden border border-gray-100">
-          <img
-            src={usuario.imagem}
-            alt="Foto do Usuário"
-            className="w-full h-full object-cover"
-          />
-          <button
-            className="absolute inset-0 flex items-center justify-center  border border-gray-100 rounded-full hover:bg-opacity-90 transition-colors"
-            onClick={() => document.getElementById("file-input")?.click()}
-          >
-            <IconPencil size={20} stroke={2} color="white" />
-          </button>
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      setEmailError("Por favor, insira um email válido.");
+      return false;
+    } else {
+      setEmailError("");
+      return true;
+    }
+  };
 
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            key={fotoInputKey}
-            onChange={handleFileChange}
-          />
-        </div>
+  const toggleSenhaVisivel = () => setSenhaVisivel(!senhaVisivel);
+
+  return (
+    <div className=" p-6 rounded shadow-md w-full max-w-md">
+      <div className="mb-10 text-center">
+        <p className="text-sm">
+          Já possui uma conta?{" "}
+          <Link href="/usuario/login" className="text-blue-600 hover:underline">
+            Entrar
+          </Link>
+        </p>
+      </div>
+      <h2 className="text-2xl font-bold mb-6 text-center">Cadastrar-se</h2>
+      <form onSubmit={handleSubmit}>
         <div className="w-full max-w-md">
           <div className="flex flex-col gap-6">
             <div>
@@ -67,10 +65,8 @@ export default function MeuPerfil() {
               <input
                 type="text"
                 id="nome"
-                value={usuario.nome}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, nome: e.target.value })
-                }
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm text-black py-2 px-3"
               />
             </div>
@@ -84,10 +80,8 @@ export default function MeuPerfil() {
               <input
                 type="text"
                 id="sobrenome"
-                value={usuario.sobrenome}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, sobrenome: e.target.value })
-                }
+                value={sobrenome}
+                onChange={(e) => setSobrenome(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm text-black py-2 px-3"
               />
             </div>
@@ -101,10 +95,8 @@ export default function MeuPerfil() {
               <input
                 type="email"
                 id="email"
-                value={usuario.email}
-                onChange={(e) =>
-                  setUsuario({ ...usuario, email: e.target.value })
-                }
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm text-black py-2 px-3"
               />
             </div>
@@ -118,10 +110,8 @@ export default function MeuPerfil() {
               <input
                 type="date"
                 id="dataNasc"
-                value={usuario.dataNasc.toISOString().split("T")[0]} // Formata a data para o formato `YYYY-MM-DD`
-                onChange={(e) =>
-                  setUsuario({ ...usuario, dataNasc: new Date(e.target.value) })
-                }
+                value={dataNasc}
+                onChange={(e) => setDataNasc(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm text-black py-2 px-3"
               />
             </div>
@@ -136,10 +126,8 @@ export default function MeuPerfil() {
                 <input
                   type={senhaVisivel ? "text" : "password"}
                   id="senha"
-                  value={usuario.senha}
-                  onChange={(e) =>
-                    setUsuario({ ...usuario, senha: e.target.value })
-                  }
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm text-black py-2 px-3"
                 />
                 <button
@@ -157,14 +145,14 @@ export default function MeuPerfil() {
             </div>
           </div>
           <button
-            type="button"
-            className="mt-6 px-4 py-2 bg-green-600 text-white rounded-md shadow-sm hover:bg-green-700"
             onClick={() => alert("Função de salvar ainda não implementada")}
+            type="submit"
+            className="w-full bg-green-600 text-white p-2 rounded hover:bg-yellow-600 transition-colors mt-5"
           >
-            Salvar
+            Cadastrar
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

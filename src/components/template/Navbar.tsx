@@ -9,12 +9,13 @@ import {
 import Carrinho from "./Carrinho";
 import Logo from "./Logo";
 import Usuario from "./Usuario";
-import Link from "next/link";
 import useCarrinho from "@/data/hooks/useCarrinho";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const { user, logout } = useCarrinho();
   const categorias = [
+    "Todos",
     "Eletrônicos",
     "Computadores",
     "Acessórios",
@@ -26,6 +27,12 @@ export default function Navbar() {
   ];
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const navigateTo = (path: string, value: string) => {
+    router.push(`${path}?categoria=${value}`);
+    setMenuOpen(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -48,8 +55,9 @@ export default function Navbar() {
       <div className="hidden md:flex flex-1 justify-center items-center space-x-3">
         {categorias.map((categoria) => (
           <button
+            onClick={() => navigateTo("/", categoria)}
             key={categoria}
-            className="text-white text-sm py-4 px-2 border-b-2 border-transparent hover:border-white hover:bg-zinc-600 transition-colors"
+            className="text-white text-sm py-4 px-2 border-b-2 border-transparent hover:border-white hover:bg-zinc-600 hover:rounded-lg transition-colors"
           >
             {categoria}
           </button>
@@ -73,11 +81,12 @@ export default function Navbar() {
       {menuOpen && (
         <div
           ref={menuRef}
-          className="absolute z-20 top-16 right-0 w-full bg-zinc-800 p-5 flex flex-col items-start space-y-2 md:hidden"
+          className="absolute z-40 top-16 right-0 w-full bg-zinc-800 p-5 flex flex-col items-start space-y-2 md:hidden"
         >
           <h2 className="text-white text-lg font-bold mb-2">Categorias</h2>
           {categorias.map((categoria) => (
             <button
+              onClick={() => navigateTo("/", categoria)}
               key={categoria}
               className="text-white text-sm py-2 px-4 border-b-2 border-transparent hover:border-white hover:bg-zinc-600 transition-colors w-full text-left"
             >
@@ -88,20 +97,24 @@ export default function Navbar() {
           <h2 className="text-white text-lg font-bold mt-2 mb-2">
             Área do Usuário
           </h2>
-          <Link
-            href={user ? "/usuario/meu-perfil" : "/usuario/login"}
-            className="text-white block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center transition-colors"
+          <button
+            onClick={() =>
+              navigateTo(user ? "/usuario/meu-perfil" : "/usuario/login", "")
+            }
+            className="text-white text-sm py-2 px-4 border-b-2 border-transparent hover:border-white hover:bg-zinc-600 transition-colors w-full text-left flex items-center"
           >
             <IconUser size={20} stroke={1.5} className="mr-2" />
             Meu Perfil
-          </Link>
-          <Link
-            href={user ? "/usuario/meus-pedidos" : "/usuario/login"}
-            className="text-white block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center transition-colors"
+          </button>
+          <button
+            onClick={() =>
+              navigateTo(user ? "/usuario/meus-pedidos" : "/usuario/login", "")
+            }
+            className="text-white text-sm py-2 px-4 border-b-2 border-transparent hover:border-white hover:bg-zinc-600 transition-colors w-full text-left flex items-center"
           >
             <IconList size={20} stroke={1.5} className="mr-2" />
             Meus Pedidos
-          </Link>
+          </button>
           {user ? (
             <button
               onClick={logout}
@@ -111,13 +124,13 @@ export default function Navbar() {
               Sair
             </button>
           ) : (
-            <Link
-              href="/usuario/login"
+            <button
+              onClick={() => navigateTo("/usuario/login", "")}
               className="text-white block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center transition-colors"
             >
               <IconLogout size={20} stroke={1.5} className="mr-2" />
-              Logar
-            </Link>
+              Entrar
+            </button>
           )}
         </div>
       )}
