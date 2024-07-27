@@ -34,6 +34,7 @@ export default function Usuario() {
         onClick={toggleMenu}
       >
         <IconUser size={24} stroke={1} className="mr-1" />
+        <p className="text-xs">{user ? "Ola, " + user.email : "Entre"}</p>
       </div>
       {menuOpen && (
         <div

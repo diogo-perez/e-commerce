@@ -49,6 +49,15 @@ export default function Navbar() {
 
   return (
     <header className="flex justify-between items-center bg-zinc-800 h-20 px-10 relative">
+      <div className="md:hidden">
+        <button onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? (
+            <IconX className="text-white" size={24} />
+          ) : (
+            <IconMenu className="text-white" size={24} />
+          )}
+        </button>
+      </div>
       <div className="flex items-center">
         <Logo />
       </div>
@@ -68,21 +77,15 @@ export default function Navbar() {
         <div className="hidden md:block">
           <Usuario />
         </div>
-        <div className="md:hidden">
-          <button onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? (
-              <IconX className="text-white" size={24} />
-            ) : (
-              <IconMenu className="text-white" size={24} />
-            )}
-          </button>
-        </div>
       </div>
       {menuOpen && (
         <div
           ref={menuRef}
           className="absolute z-40 top-16 right-0 w-full bg-zinc-800 p-5 flex flex-col items-start space-y-2 md:hidden"
         >
+          <h4 className="text-white text-lg font-bold mb-2">
+            {user ? "Olá, " + user.email : ""}
+          </h4>
           <h2 className="text-white text-lg font-bold mb-2">Categorias</h2>
           {categorias.map((categoria) => (
             <button
