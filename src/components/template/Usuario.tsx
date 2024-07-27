@@ -4,14 +4,21 @@ import { useState, useEffect, useRef } from "react";
 import { IconUser, IconList, IconLogout } from "@tabler/icons-react";
 import Link from "next/link";
 import useCarrinho from "@/data/hooks/useCarrinho";
+import { useRouter } from "next/navigation";
 
 export default function Usuario() {
   const { user, logout } = useCarrinho();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handlelogout = () => {
+    logout();
+    router.push("/");
   };
 
   useEffect(() => {
@@ -57,7 +64,7 @@ export default function Usuario() {
           </Link>
           {user ? (
             <button
-              onClick={logout}
+              onClick={() => handlelogout()}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center transition-colors"
             >
               <IconLogout size={20} stroke={1.5} className="mr-2" />
